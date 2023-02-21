@@ -1,0 +1,17 @@
+{% if latest_temp_value %}
+<table>
+  <tr>
+    <th>Value</th>
+    <th>time_publish</th>
+  </tr>
+  {% for x in latest_temp_value %}
+  <tr>
+    <td>{{ x.temperature }}</td>
+    <td>{{ x.pub_date }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% else %}
+<p>No sensor value are available.</p>
+{% endif %}
