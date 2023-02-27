@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dashboard</title>
+	<style>
+		/* Style the body element */
+        body {
+	        background-color: #f0f0f0;
+	        font-family: Arial, sans-serif;
+	        margin: 0;
+	        padding: 0;
+        }
+
+        /* Style the h1 element */
+        h1 {
+	        text-align: center;
+	        margin-top: 50px;
+        }
+
+        /* Style the chart containers */
+        .chart-container {
+	        display: inline-block;
+	        width: 49%;
+	        margin: 20px;
+	        padding: 20px;
+	        background-color: #fff;
+	        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+	        border-radius: 5px;
+        }
+
+        /* Style the canvas element */
+        canvas {
+	        max-width: 100%;
+	        height: auto;
+        }
+
+        /* Style the x-axis labels */
+        .chartjs-scale-axis label {
+	        color: #999;
+	        font-size: 14px;
+        }
+
+        /* Style the y-axis labels */
+        .chartjs-scale-axis .chartjs-y-axis-0 .chartjs-y-label {
+	        color: #999;
+	        font-size: 14px;
+        }
+
+        /* Style the legend */
+        .chartjs-legend {
+	        position: relative;
+	        bottom: -20px;
+	        margin-top: 20px;
+	        padding: 10px;
+	        background-color: rgba(255, 255, 255, 0.8);
+	        border-radius: 5px;
+	        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+        }
+	</style>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+	<h1>Temperature and Humidity Levels</h1>
+
+	<div class="chart-container">
+		<canvas id="temperatureChart"></canvas>
+
+		<script>
+			// Get temperature data from server
+			var labels = {{ labels|safe }};
+			var temperatureData = {{ temperatureData|safe }};
+
+			// Create temperature chart
+			var ctx = document.getElementById('temperatureChart').getContext('2d');
+			var temperatureChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: labels,
+					datasets: [
+						{
+							label: 'Temperature',
+							data: temperatureData,
+							fill: false,
+							borderColor: 'red'
+						}
+					]
+				},
+				options: {
+					responsive: true,
+					title: {
+						display: true,
+						text: 'Temperature Levels'
+					},
+					scales: {
+						xAxes: [{
+							type: 'time',
+							time: {
+								unit: 'hour'
+							},
+							scaleLabel: {
+								display: true,
+								labelString: 'Date'
+							}
+						}],
+						yAxes: [{
+							scaleLabel: {
+								display: true,
+								labelString: 'Value'
+							}
+						}]
+					}
+				}
+			});
+		</script>
+	</div>
+
+	<div class="chart-container">
+		<canvas id="humidityChart"></canvas>
+
+		<script>
+			// Get humidity data from server
+			var labels = {{ labels|safe }};
+			var humidityData = {{ humidityData|safe }};
+
+			// Create humidity chart
+			var ctx = document.getElementById('humidityChart').getContext('2d');
+			var humidityChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: labels,
+					datasets: [
+						{
+							label: 'Humidity',
+							data: humidityData,
+							fill: false,
+							borderColor: 'blue'
+						}
+					]
+				},
+				options: {
+					responsive: true,
+					title: {
+						display: true,
+						text: 'Humidity Levels'
+					},
+					scales: {
+						xAxes: [{
+							type: 'time',
+							time: {
+								unit: 'hour'
+							},
+							scaleLabel: {
+								display: true,
+								labelString: 'Date'
+							}
+						}],
+						yAxes: [{
+							scaleLabel: {
+								display: true,
+								labelString: 'Value'
+							}
+						}]
+					}
+				}
+			});
+		</script>
+	</div>
+</body>
+</html>
